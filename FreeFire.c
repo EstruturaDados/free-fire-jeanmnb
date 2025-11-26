@@ -7,7 +7,16 @@
 // Nível: Mestre
 // Este programa simula o gerenciamento avançado de uma mochila com componentes coletados durante a fuga de uma ilha.
 // Ele introduz ordenação com critérios e busca binária para otimizar a gestão dos recursos.
+#define MAX_ITENS 10     // Capacidade máxima da mochila (Requisito: até 10 itens)
+Item inventario[MAX_ITENS]; // O vetor (lista sequencial) que simula a mochila
+int numItens = 0;           // Contador de itens atualmente na mochila
 
+// --- Protótipos das Funções ---
+void inserirItem();
+void removerItem();
+void listarItens();
+void buscarItem();
+void exibirMenu();
 int main() {
     // Menu principal com opções:
     // 1. Adicionar um item
