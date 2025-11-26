@@ -253,7 +253,11 @@ void buscarItem() {
 // Struct Item:
 // Representa um componente com nome, tipo, quantidade e prioridade (1 a 5).
 // A prioridade indica a importância do item na montagem do plano de fuga.
-
+typedef struct {
+    char nome[30];      // Nome do item (ex: Pistola, Kit Médico)
+    char tipo[20];      // Tipo do item (ex: arma, munição, cura, ferramenta)
+    int quantidade;     // Quantidade do item
+} Item;
 // Enum CriterioOrdenacao:
 // Define os critérios possíveis para a ordenação dos itens (nome, tipo ou prioridade).
 
