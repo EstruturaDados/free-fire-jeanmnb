@@ -7,9 +7,9 @@
 // Nível: Mestre
 // Este programa simula o gerenciamento avançado de uma mochila com componentes coletados durante a fuga de uma ilha.
 // Ele introduz ordenação com critérios e busca binária para otimizar a gestão dos recursos.
-#define MAX_ITENS 10     // Capacidade máxima da mochila (Requisito: até 10 itens)
-Item inventario[MAX_ITENS]; // O vetor (lista sequencial) que simula a mochila
-int numItens = 0;           // Contador de itens atualmente na mochila
+#define MAX_ITENS 10     
+Item mochila[MAX_ITENS]; 
+int numItens = 0;           
 
 // --- Protótipos das Funções ---
 void inserirItem();
@@ -35,16 +35,12 @@ int opcao;
     do {
         exibirMenu();
         printf("Escolha uma opcao: ");
-        // Leitura segura da opção
-        if (scanf("%d", &opcao) != 1) {
-            // Limpa o buffer de entrada em caso de falha na leitura (caractere não numérico)
+        if (scanf("%d", &opcao) != 1) {            
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
-            opcao = -1; // Define uma opção inválida para repetir o loop
+            opcao = -1; 
         }
-
-        printf("\n"); // Espaçamento para melhor usabilidade
-
+     
         switch (opcao) {
             case 1:
                 inserirItem();
@@ -59,15 +55,14 @@ int opcao;
                 buscarItem();
                 break;
             case 0:
-                printf("👋 Jogo Encerrado. Inventario salvo com sucesso!\n");
+                printf("👋 Jogo Encerrado. Mochila salva!\n");
                 break;
             default:
                 printf("⚠️ Opcao invalida. Tente novamente.\n");
         }
-        
-        // Separação visual após cada operação para manter a clareza
+                
         if (opcao != 0) {
-            printf("\n--- Inventario Atualizado ---\n");
+            printf("\n--- mochila atualizada ---\n");
             listarItens();
             printf("-----------------------------\n");
         }
@@ -76,13 +71,9 @@ int opcao;
 
     return 0;
 }
-// ---------------------------------
 
-// --- Funções Obrigatórias ---
+ 
 
-/**
- * @brief Exibe o menu de opções para o jogador.
- */
 void exibirMenu() {
     printf("\n==== 🎒 Inventario (Mochila de Loot Inicial) ====\n");
     printf("1. ➕ Cadastrar Novo Item\n");
@@ -93,10 +84,7 @@ void exibirMenu() {
     printf("================================================\n");
 }
 
-/**
- * @brief Cadastra um novo item no inventário (mochila).
- * Requisito: Cadastro de itens.
- */
+
 void inserirItem() {
     if (numItens >= MAX_ITENS) {
         printf("❌ Mochila cheia! Capacidade maxima de %d itens atingida.\n", MAX_ITENS);
@@ -107,10 +95,9 @@ void inserirItem() {
 
     printf("--- Cadastro de Novo Item ---\n");
     
-    // Leitura do Nome (string)
+ 
     printf("Digite o nome do item (max 29 caracteres): ");
-    // Uso de scanf("%29s") para ler strings sem espaços e evitar buffer overflow
-    // Nota: fgets() seria mais robusto para strings com espaço, mas requer limpeza de buffer.
+    
     if (scanf("%29s", novoItem.nome) != 1) {
          printf("⚠️ Erro ao ler o nome.\n");
          return;
@@ -134,16 +121,13 @@ void inserirItem() {
     }
 
     // Copia o novo item para a próxima posição livre no vetor
-    inventario[numItens] = novoItem;
+    mochila[numItens] = novoItem;
     numItens++; // Incrementa o contador de itens
     
     printf("✅ Item '%s' cadastrado com sucesso na mochila!\n", novoItem.nome);
 }
 
-/**
- * @brief Remove um item do inventário pelo nome.
- * Requisito: Remoção de itens.
- */
+
 void removerItem() {
     if (numItens == 0) {
         printf("❌ A mochila esta vazia. Nao ha itens para remover.\n");
@@ -160,18 +144,15 @@ void removerItem() {
 
     int i, encontrado = 0;
     
-    // Percorre o vetor para encontrar o item (busca sequencial implícita)
+    
     for (i = 0; i < numItens; i++) {
-        // strcmp retorna 0 se as strings forem iguais (caso-sensível)
-        if (strcmp(inventario[i].nome, nomeBusca) == 0) {
+     
+        if (strcmp(mochila[i].nome, nomeBusca) == 0) {
             // Item encontrado
             encontrado = 1;
-            
-            // Reorganiza o vetor (Remoção):
-            // Desloca todos os itens subsequentes uma posição para a esquerda,
-            // sobrescrevendo o item a ser removido.
+     
             for (int j = i; j < numItens - 1; j++) {
-                inventario[j] = inventario[j+1];
+                mochila[j] = mochila[j+1];
             }
             
             numItens--; // Decrementa o contador de itens
@@ -185,10 +166,7 @@ void removerItem() {
     }
 }
 
-/**
- * @brief Lista todos os itens atualmente registrados no inventário.
- * Requisito: Listagem dos itens registrados.
- */
+
 void listarItens() {
     if (numItens == 0) {
         printf("📦 A mochila esta vazia.\n");
@@ -201,17 +179,14 @@ void listarItens() {
     for (int i = 0; i < numItens; i++) {
         printf("Posicao %02d | Nome: %-15s | Tipo: %-10s | Quantidade: %d\n", 
                i, 
-               inventario[i].nome, 
-               inventario[i].tipo, 
-               inventario[i].quantidade);
+               mochila[i].nome, 
+               mochila[i].tipo, 
+               mochila[i].quantidade);
     }
     printf("======================================\n");
 }
 
-/**
- * @brief Busca um item no inventário pelo nome (Busca Sequencial).
- * Requisito: Busca sequencial.
- */
+
 void buscarItem() {
     if (numItens == 0) {
         printf("❌ A mochila esta vazia. Nao ha itens para buscar.\n");
@@ -228,16 +203,15 @@ void buscarItem() {
 
     int encontrado = 0;
 
-    // Implementação da BUSCA SEQUENCIAL:
-    // Percorre o vetor Item por Item, comparando o nome de cada elemento.
+    
     for (int i = 0; i < numItens; i++) {
-        if (strcmp(inventario[i].nome, nomeBusca) == 0) {
+        if (strcmp(mochila[i].nome, nomeBusca) == 0) {
             // Item encontrado
             encontrado = 1;
             printf("\n✅ Item ENCONTRADO (Posicao %d):\n", i);
-            printf("  - Nome: %s\n", inventario[i].nome);
-            printf("  - Tipo: %s\n", inventario[i].tipo);
-            printf("  - Quantidade: %d\n", inventario[i].quantidade);
+            printf("  - Nome: %s\n", mochila[i].nome);
+            printf("  - Tipo: %s\n", mochila[i].tipo);
+            printf("  - Quantidade: %d\n", mochila[i].quantidade);
             // Poderia continuar o loop para encontrar duplicatas, mas paramos no primeiro.
             break; 
         }
