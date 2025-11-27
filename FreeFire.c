@@ -246,7 +246,7 @@ void buscarItem() {
     if (!encontrado) {
         printf("⚠️ Item '%s' nao encontrado na mochila.\n", nomeBusca);
     }
-}
+
     return 0;
 }
 
